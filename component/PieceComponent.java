@@ -19,9 +19,7 @@ public class PieceComponent extends JPanel {
     }
     @Override
     public void paintComponent(Graphics g){
-        if(color == Global.Color.black) g.setColor(Color.black);
-        if(color == Global.Color.white) g.setColor(Color.white);
-        Util.fillCircle(g, x, y, RADIUS);
+
     }
 
 

@@ -1,6 +1,8 @@
 package global;
 
+import component.BoardComponent;
 import component.Window;
+import logic.GameManager;
 
 public class Global {
     public static final int[] dx = {0,1,0,-1,0};
@@ -9,15 +11,16 @@ public class Global {
     public enum Mode {
         inGame, markingDead, endGame
     };
-    public static Mode mode;
 
     public enum Color {
         blank, white, black
     }
 
-    public static int id = 0;
-    public static Situation[] situations = new Situation[MAXMOVE];
-    public static Moves moves = new Moves(), m = new Moves();
+    public enum Rule {
+        CN, JP
+    }
 
     public static Window window;
+    public static BoardComponent board;
+    public static GameManager game;
 }

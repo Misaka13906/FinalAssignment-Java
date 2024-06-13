@@ -4,15 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import component.BoardComponent;
 import global.Config;
+import global.Global;
 import global.Util;
 
 import static global.Global.Color.*;
 import static global.Global.*;
 
 class MouseActionListener implements MouseListener, MouseMotionListener {
-    JPanel board;
-    public MouseActionListener(JPanel board) {
+    BoardComponent board;
+    public MouseActionListener(BoardComponent board) {
         this.board = board;
     }
 
@@ -23,19 +25,20 @@ class MouseActionListener implements MouseListener, MouseMotionListener {
         if(!Util.inBoard(x, y)) {
             return;
         }
-        //JOptionPane.showMessageDialog(window, x + ", " + y);
+        //board.drawPiece();
+        JOptionPane.showMessageDialog(window, x + ", " + y);
         //board.add(new PieceComponent(x, y, black));
         //window.validate();
-//        if(Global.mode == Global.Mode.inGame) {
-//            boolean success = placePiece(x, y, id+1, prev);
-//            if(success) {
-//                id++;
-//            } else {
-//                JOptionPane.showMessageDialog(window, "不正确的落子");
-//            }
-//        } else if(Global.mode == Global.Mode.markingDead) {
-//            selectDead(x, y);
-//        }
+        if(game.mode == Global.Mode.inGame) {
+            boolean success = game.placePiece(game.id, x, y);
+            if(success) {
+                game.id++;
+            } else {
+                JOptionPane.showMessageDialog(window, "不正确的落子");
+            }
+        } else if(game.mode == Global.Mode.markingDead) {
+            game.selectDead(x, y);
+        }
     }
 
     @Override
