@@ -9,8 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static global.Global.game;
-import static global.Global.window;
+import static global.Global.*;
 
 public class Window extends JFrame {
     JMenuBar menuBar;
@@ -26,6 +25,7 @@ public class Window extends JFrame {
         Global.board = new BoardComponent();
         //this.getContentPane().add(gameBoard, BorderLayout.CENTER);
         this.add(Global.board);
+        board.repaint();
 
 //        Button resignButton = new Button("认输");
 //        Button endButton = new Button("结束对局并标记死子");
@@ -75,9 +75,9 @@ public class Window extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             game.mode = Global.Mode.endGame;
-            game.winner = (game.id % 2 == 0 ? "White" : "Black");
+            game.res.winner = (game.id % 2 == 0 ? "White" : "Black");
             String loser = (game.id % 2 == 1 ? "White" : "Black");
-            String msg  = loser + " resigned\n" + game.winner + " wins";
+            String msg  = loser + " resigned\n" + game.res.winner + " wins";
             JOptionPane.showMessageDialog(window, msg, "result", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -88,14 +88,14 @@ public class Window extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if(game.mode == Global.Mode.inGame) {
                 game.mode = Global.Mode.markingDead;
-                game.startMark();
+                game.startMark(game.situations[game.id]);
             } else if(game.mode == Global.Mode.markingDead) {
                 game.mode = Global.Mode.endGame;
-                game.confirmMark();
-                game.handleResult(Global.Rule.CN);
-                String msg = "Black: " + game.sumB + "\n" +
-                             "White: " + game.sumW + "\n"
-                        + game.winner + " wins by " + game.diff;
+                game.confirmMark(game.situations[game.id]);
+                game.res.handleResult(Global.Rule.CN, game.situations[game.id]);
+                String msg = "Black: " + game.res.sumB + "\n" +
+                             "White: " + game.res.sumW + "\n"
+                        + game.res.winner + " wins by " + game.res.diff;
                 JOptionPane.showMessageDialog(window, msg, "result", JOptionPane.INFORMATION_MESSAGE);
             }
         }

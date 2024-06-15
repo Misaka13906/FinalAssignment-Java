@@ -12,16 +12,20 @@ import static global.Global.*;
 import static global.Config.*;
 
 public class GameManager {
+    public HandleResult res;
     public Mode mode;
+    public int id;
+    public Situation[] situations;
+    public Moves moves = new Moves();
+    Moves m = new Moves();
+
     Situation tmp;
     boolean isLegal;
 
-    public int id;
-    public Situation[] situations;
-    public Moves moves = new Moves(), m = new Moves();
     public GameManager() {
         situations = new Situation[MAXMOVE];
         situations[0] = new Situation();
+        situations[1] = new Situation();
         mode = Mode.inGame;
         id = 0;
     }
@@ -33,18 +37,18 @@ public class GameManager {
         isLegal = true;
         tmp = situations[id].copy();
         m = (Moves) moves.clone();
-        m.add(new Move(id, x, y));
-        tmp.pieces[x][y] = id;
-        tmp.board[x][y] = m.get(id).color;
+        m.add(new Move(id+1, x, y));
+        tmp.pieces[x][y] = id+1;
+        tmp.board[x][y] = m.get(id+1).color;
 
-        calcLiberty(tmp, id);
-        clearPieces(id);
+        calcLiberty(tmp, id+1);
+        clearPieces(id+1);
 
-        isLegal &= !isSame(situations[id].board);
-//        if(!isLegal) {
-//            JOptionPane.showMessageDialog(window, "" + m.get(m.get(id).root).liberty);
-//            return false;
-//        }
+        isLegal &= id==0 || !isSame(situations[id].board);
+        if(!isLegal) {
+            JOptionPane.showMessageDialog(window, "" + m.get(m.get(id).root).liberty);
+            return false;
+        }
         copyBack(id+1);
         //board.removeAll();
         board.showBoard(situations[id+1]);
@@ -178,8 +182,8 @@ public class GameManager {
     }
     Boolean[][] isMarked = new Boolean[SIZE][SIZE];
 
-    public void startMark() {
-        tmp = situations[id].copy();
+    public void startMark(Situation now) {
+        tmp = now.copy();
         for (int i=0; i<SIZE; i++)
             for(int j=0; j<SIZE; j++)
                 isMarked[i][j] = false;
@@ -197,7 +201,7 @@ public class GameManager {
         }
     }
 
-    public void confirmMark() {
+    public void confirmMark(Situation now) {
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
                 if(isMarked[i][j]) {
@@ -205,7 +209,7 @@ public class GameManager {
                 }
             }
         }
-	    situations[id] = tmp.copy();
+	    now = tmp.copy();
     }
 
     void markDead(int x, int y, Global.Color color, operation op)
@@ -269,89 +273,7 @@ public class GameManager {
 
 
 
-    Boolean[][] visit = new Boolean[SIZE][SIZE];
-    public int sumB, sumW; //总目数
-    int totB, totW; //棋块数
-    public double diff;
-    public String winner;
-    Rule rule;
-    public void handleResult(Rule goRule)
-    {
-        for (int i=0; i<SIZE; i++)
-            for(int j=0; j<SIZE; j++)
-                visit[i][j] = false;
-        sumB = sumW = totB = totW = 0;
-        diff = 0;
-        rule = goRule;
-        Situation finalSitu = situations[id];
-        countResult(finalSitu.board);
-        calResult(finalSitu.deadBlack, finalSitu.deadWhite);
-        //showResult(winner, diff);
-    }
 
-    void countResult(Global.Color[][] board)
-    {
-        for(int i=0; i<SIZE; i++) {
-            for(int j=0; j<SIZE; j++) {
-                if(visit[i][j] || board[i][j] == blank) {
-                    continue;
-                }
-                if(board[i][j] == black) {
-                    totB++;
-                } else {
-                    totW++;
-                }
-                search(i, j, board[i][j], board);
-            }
-        }
-    }
-
-    // 使用深度优先搜索统计一块棋所占目数
-    void search(int x, int y, Global.Color color, Global.Color[][] brd)
-    {
-        visit[x][y] = true;
-        count(color, brd[x][y]);
-        if(brd[x][y] == blank) {
-            board.drawMark(x, y, (color == black ? Color.black : Color.white));
-        }
-
-        for(int i=0; i<4; i++) {
-            int x2 = x + dx[i], y2 = y + dy[i];
-            if(!Util.inBoard(x2, y2) || visit[x2][y2]) {
-                continue;
-            }
-            if(brd[x2][y2] == color || brd[x2][y2] == blank) {
-                search(x2, y2, color, brd);
-            }
-        }
-    }
-
-    void count(Global.Color color, Global.Color now)
-    {
-        if(rule == JP && now != blank) {
-            return;  //Japanese rule, only count blank points
-        }
-        if(color == black) {
-            sumB++;
-        } else if(color == white) {
-            sumW++;
-        }
-    }
-
-    void calResult(int deadB, int deadW)
-    {
-        if(rule == CN) { // using Chinese rule, do not count dead pieces
-            diff = sumB - sumW - 7.5;
-        } else if(rule == JP) {
-            diff = (sumB + deadW) - (sumW + deadB) - 6.5;
-        }
-
-        if(diff > 0) {
-            winner = "black";
-        } else {
-            winner = "white";
-            diff = - diff;
-        }
-    }
 
 }
+

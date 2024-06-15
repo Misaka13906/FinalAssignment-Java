@@ -19,18 +19,18 @@ class MouseActionListener implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) { //落子
+    public void mouseClicked(MouseEvent e) {
         int x = Util.getCoordinate(e.getX());
         int y = Util.getCoordinate(e.getY());
         if(!Util.inBoard(x, y)) {
             return;
         }
         //board.drawPiece();
-        JOptionPane.showMessageDialog(window, x + ", " + y);
+        //JOptionPane.showMessageDialog(window, x + ", " + y);
         //board.add(new PieceComponent(x, y, black));
         //window.validate();
         if(game.mode == Global.Mode.inGame) {
-            boolean success = game.placePiece(game.id, x, y);
+            boolean success = game.placePiece(game.id, x, y); //落子
             if(success) {
                 game.id++;
             } else {

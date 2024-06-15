@@ -23,4 +23,5 @@ public class Global {
     public static Window window;
     public static BoardComponent board;
     public static GameManager game;
+    public static int fileCount = 0;
 }
