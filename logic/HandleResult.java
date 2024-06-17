@@ -4,12 +4,11 @@ import java.awt.Color;
 
 import global.Situation;
 import global.Util;
-import global.Global;
 
 import static global.Config.*;
-import static global.Global.*;
-import static global.Global.Rule.*;
-import static global.Global.Color.*;
+import static global.GlobalVal.*;
+import static global.GlobalVal.Rule.*;
+import static global.GlobalVal.BoardColor.*;
 
 public class HandleResult {
     Boolean[][] visit = new Boolean[SIZE][SIZE];
@@ -17,8 +16,8 @@ public class HandleResult {
     int totB, totW; //棋块数
     public double diff;
     public String winner;
-    Global.Rule rule;
-    public void handleResult(Global.Rule goRule, Situation finalSitu)
+    Rule rule;
+    public void handleResult(Rule goRule, Situation finalSitu)
     {
         for (int i=0; i<SIZE; i++)
             for(int j=0; j<SIZE; j++)
@@ -31,7 +30,7 @@ public class HandleResult {
         //showResult(winner, diff);
     }
 
-    void countResult(Global.Color[][] board)
+    void countResult(BoardColor[][] board)
     {
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
@@ -49,7 +48,7 @@ public class HandleResult {
     }
 
     // 使用深度优先搜索统计一块棋所占目数
-    void search(int x, int y, Global.Color color, Global.Color[][] brd)
+    void search(int x, int y, BoardColor color, BoardColor[][] brd)
     {
         visit[x][y] = true;
         count(color, brd[x][y]);
@@ -68,7 +67,7 @@ public class HandleResult {
         }
     }
 
-    void count(Global.Color color, Global.Color now)
+    void count(BoardColor color, BoardColor now)
     {
         if(rule == JP && now != blank) {
             return;  //Japanese rule, only count blank points

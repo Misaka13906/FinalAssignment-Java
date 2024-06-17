@@ -1,10 +1,11 @@
 package global;
 
-import static global.Global.Color.*;
+import static global.GlobalVal.BoardColor;
+import static global.GlobalVal.BoardColor.*;
 
 public class Move {
     public int x, y, id, root, liberty;
-    public Global.Color color;
+    public BoardColor color;
     public boolean exist;
     public Move(int id, int x, int y) {
         this.id = id;

@@ -1,15 +1,12 @@
 package logic;
 
 import java.awt.Color;
-
-import global.*;
-
 import javax.swing.*;
 
-import static global.Global.Color.*;
-import static global.Global.Rule.*;
-import static global.Global.*;
+import global.*;
 import static global.Config.*;
+import static global.GlobalVal.*;
+import static global.GlobalVal.BoardColor.*;
 
 public class GameManager {
     public HandleResult res;
@@ -130,7 +127,7 @@ public class GameManager {
     // clear: 使用深度优先搜索清除无气棋串
     void clear(int x, int y)
     {
-        Global.Color color = tmp.board[x][y];
+        BoardColor color = tmp.board[x][y];
         if(color == blank) {
             return;
         }
@@ -157,7 +154,7 @@ public class GameManager {
         }
     }
 
-    boolean isSame(Global.Color[][] previous)
+    boolean isSame(BoardColor[][] previous)
     {
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
@@ -212,7 +209,7 @@ public class GameManager {
 	    now = tmp.copy();
     }
 
-    void markDead(int x, int y, Global.Color color, operation op)
+    void markDead(int x, int y, BoardColor color, operation op)
     {
         if(!Util.inBoard(x, y)) {
             return;

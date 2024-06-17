@@ -3,13 +3,11 @@ package component;
 import javax.swing.*;
 import java.awt.*;
 
-import global.Config;
-import global.Global;
 import global.Situation;
 import global.Util;
 import static global.Config.*;
-import static global.Global.game;
-import static global.Global.window;
+import static global.GlobalVal.*;
+import static global.GlobalVal.BoardColor.*;
 
 public class BoardComponent extends JPanel {
     Graphics g;
@@ -58,9 +56,9 @@ public class BoardComponent extends JPanel {
         }
     }
 
-    public void drawPiece(int x, int y, Global.Color color) {
-        if(color == Global.Color.black) g.setColor(Color.black); else
-        if(color == Global.Color.white) g.setColor(Color.white); else return;
+    public void drawPiece(int x, int y, BoardColor color) {
+        if(color == black) g.setColor(Color.black); else
+        if(color == white) g.setColor(Color.white); else return;
         Util.fillCircle(g, SIDE + x*CELL, SIDE + y*CELL, RADIUS);
         //JOptionPane.showMessageDialog(window, x + ", " + y);
     }
@@ -70,7 +68,7 @@ public class BoardComponent extends JPanel {
         drawBoard();
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
-                if(now.board[i][j] != Global.Color.blank) {
+                if(now.board[i][j] != blank) {
                     drawPiece(i, j, now.board[i][j]);
                 }
             }

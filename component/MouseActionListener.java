@@ -1,16 +1,11 @@
 package component;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
-import component.BoardComponent;
-import global.Config;
-import global.Global;
 import global.Util;
 
-import static global.Global.Color.*;
-import static global.Global.*;
+import static global.GlobalVal.*;
 
 class MouseActionListener implements MouseListener, MouseMotionListener {
     BoardComponent board;
@@ -29,14 +24,14 @@ class MouseActionListener implements MouseListener, MouseMotionListener {
         //JOptionPane.showMessageDialog(window, x + ", " + y);
         //board.add(new PieceComponent(x, y, black));
         //window.validate();
-        if(game.mode == Global.Mode.inGame) {
+        if(game.mode == Mode.inGame) {
             boolean success = game.placePiece(game.id, x, y); //落子
             if(success) {
                 game.id++;
             } else {
                 JOptionPane.showMessageDialog(window, "不正确的落子");
             }
-        } else if(game.mode == Global.Mode.markingDead) {
+        } else if(game.mode == Mode.markingDead) {
             game.selectDead(x, y);
         }
     }

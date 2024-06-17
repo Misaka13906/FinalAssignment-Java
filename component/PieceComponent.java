@@ -3,14 +3,14 @@ package component;
 import javax.swing.*;
 import java.awt.*;
 
-import global.Global;
 import global.Util;
 import static global.Config.*;
+import static global.GlobalVal.*;
 
 public class PieceComponent extends JPanel {
     private int x, y;
-    Global.Color color;
-    PieceComponent(int x, int y, Global.Color color) {
+    BoardColor color;
+    PieceComponent(int x, int y, BoardColor color) {
         this.x = Util.getPosition(x);
         this.y = Util.getPosition(x);
         this.color = color;

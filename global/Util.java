@@ -1,12 +1,8 @@
 package global;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 import static global.Config.*;
-import static global.Global.*;
-import static global.Global.Color.*;
 
 public class Util {
 

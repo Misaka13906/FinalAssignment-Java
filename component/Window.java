@@ -1,15 +1,14 @@
 package component;
 
-import global.Config;
-import global.Global;
-import logic.GameManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static global.Global.*;
+import global.Config;
+import logic.GameManager;
+
+import static global.GlobalVal.*;
 
 public class Window extends JFrame {
     JMenuBar menuBar;
@@ -22,9 +21,9 @@ public class Window extends JFrame {
         this.setSize(Config.WIDTH, Config.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Global.board = new BoardComponent();
+        board = new BoardComponent();
         //this.getContentPane().add(gameBoard, BorderLayout.CENTER);
-        this.add(Global.board);
+        this.add(board);
         board.repaint();
 
 //        Button resignButton = new Button("认输");
@@ -74,7 +73,7 @@ public class Window extends JFrame {
     static class ResignListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            game.mode = Global.Mode.endGame;
+            game.mode = Mode.endGame;
             game.res.winner = (game.id % 2 == 0 ? "White" : "Black");
             String loser = (game.id % 2 == 1 ? "White" : "Black");
             String msg  = loser + " resigned\n" + game.res.winner + " wins";
@@ -86,13 +85,13 @@ public class Window extends JFrame {
         // 对局结束的清算阶段
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(game.mode == Global.Mode.inGame) {
-                game.mode = Global.Mode.markingDead;
+            if(game.mode == Mode.inGame) {
+                game.mode = Mode.markingDead;
                 game.startMark(game.situations[game.id]);
-            } else if(game.mode == Global.Mode.markingDead) {
-                game.mode = Global.Mode.endGame;
+            } else if(game.mode == Mode.markingDead) {
+                game.mode = Mode.endGame;
                 game.confirmMark(game.situations[game.id]);
-                game.res.handleResult(Global.Rule.CN, game.situations[game.id]);
+                game.res.handleResult(Rule.CN, game.situations[game.id]);
                 String msg = "Black: " + game.res.sumB + "\n" +
                              "White: " + game.res.sumW + "\n"
                         + game.res.winner + " wins by " + game.res.diff;
