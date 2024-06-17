@@ -24,7 +24,7 @@ public class Window extends JFrame {
         board = new BoardComponent();
         //this.getContentPane().add(gameBoard, BorderLayout.CENTER);
         this.add(board);
-        board.repaint();
+        //board.repaint();
 
 //        Button resignButton = new Button("认输");
 //        Button endButton = new Button("结束对局并标记死子");

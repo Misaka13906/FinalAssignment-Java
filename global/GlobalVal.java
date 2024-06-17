@@ -24,4 +24,5 @@ public class GlobalVal {
     public static BoardComponent board;
     public static GameManager game;
     public static int fileCount = 0;
+    public static int debugCounter = 0;
 }

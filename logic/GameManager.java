@@ -16,7 +16,7 @@ public class GameManager {
     public Moves moves = new Moves();
     Moves m = new Moves();
 
-    Situation tmp;
+    Situation tmp = new Situation();
     boolean isLegal;
 
     public GameManager() {
@@ -31,27 +31,29 @@ public class GameManager {
         if(situations[id].board[x][y] != blank) {
             return false;
         }
+
+        markExist(id, x, y);
+        calcLiberty(tmp, id+1);
+        clearPieces(id+1);
+
+        isLegal &= id==0 || !isSame(situations[id].board);
+        if(!isLegal) {
+            JOptionPane.showMessageDialog(window, "liberty" + m.get(m.get(id).root).liberty);
+            return false;
+        }
+        copyBack(id+1);
+        board.showBoard(situations[id+1]);
+        //showTurn(moves.get(id).color, id);
+        return true;
+    }
+
+    void markExist(int id, int x, int y) {
         isLegal = true;
         tmp.set(situations[id]);
         m = (Moves) moves.clone();
         m.add(new Move(id+1, x, y));
         tmp.pieces[x][y] = id+1;
         tmp.board[x][y] = m.get(id+1).color;
-
-        calcLiberty(tmp, id+1);
-        clearPieces(id+1);
-
-        isLegal &= id==0 || !isSame(situations[id].board);
-        if(!isLegal) {
-            JOptionPane.showMessageDialog(window, "" + m.get(m.get(id).root).liberty);
-            return false;
-        }
-        copyBack(id+1);
-        //board.removeAll();
-        board.showBoard(situations[id+1]);
-        //board.repaint();
-        //showTurn(moves.get(id).color, id);
-        return true;
     }
 
     boolean[] vis = new boolean[SIZE*SIZE+1], counted = new boolean[SIZE*SIZE+1];
@@ -167,6 +169,7 @@ public class GameManager {
     }
 
     void copyBack(int id) {
+        situations[id] = new Situation();
         situations[id].set(tmp);
         moves = (Moves) m.clone();
     }
