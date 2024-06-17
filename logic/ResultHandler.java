@@ -10,7 +10,7 @@ import static global.GlobalVal.*;
 import static global.GlobalVal.Rule.*;
 import static global.GlobalVal.BoardColor.*;
 
-public class HandleResult {
+public class ResultHandler {
     Boolean[][] visit = new Boolean[SIZE][SIZE];
     public int sumB, sumW; //总目数
     int totB, totW; //棋块数

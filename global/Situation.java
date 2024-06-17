@@ -17,17 +17,15 @@ public class Situation {
         }
     }
 
-    public Situation copy() {
-        Situation s = new Situation();
-        s.id = id;
-        s.deadBlack = deadBlack;
-        s.deadWhite = deadWhite;
+    public void set(Situation s) {
+        this.id = s.id;
+        this.deadBlack = s.deadBlack;
+        this.deadWhite = s.deadWhite;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                s.pieces[i][j] = pieces[i][j];
-                s.board[i][j] = board[i][j];
+                this.pieces[i][j] = s.pieces[i][j];
+                this.board[i][j] = s.board[i][j];
             }
         }
-        return s;
     }
 }

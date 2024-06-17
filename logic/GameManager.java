@@ -9,7 +9,7 @@ import static global.GlobalVal.*;
 import static global.GlobalVal.BoardColor.*;
 
 public class GameManager {
-    public HandleResult res;
+    public ResultHandler res = new ResultHandler();
     public Mode mode;
     public int id;
     public Situation[] situations;
@@ -32,7 +32,7 @@ public class GameManager {
             return false;
         }
         isLegal = true;
-        tmp = situations[id].copy();
+        tmp.set(situations[id]);
         m = (Moves) moves.clone();
         m.add(new Move(id+1, x, y));
         tmp.pieces[x][y] = id+1;
@@ -167,7 +167,7 @@ public class GameManager {
     }
 
     void copyBack(int id) {
-        situations[id] = tmp.copy();
+        situations[id].set(tmp);
         moves = (Moves) m.clone();
     }
 
@@ -180,7 +180,7 @@ public class GameManager {
     Boolean[][] isMarked = new Boolean[SIZE][SIZE];
 
     public void startMark(Situation now) {
-        tmp = now.copy();
+        tmp.set(now);
         for (int i=0; i<SIZE; i++)
             for(int j=0; j<SIZE; j++)
                 isMarked[i][j] = false;
@@ -206,7 +206,7 @@ public class GameManager {
                 }
             }
         }
-	    now = tmp.copy();
+	    now.set(tmp);
     }
 
     void markDead(int x, int y, BoardColor color, operation op)
