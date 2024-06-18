@@ -6,6 +6,7 @@ import java.awt.event.*;
 import global.Util;
 
 import static global.GlobalVal.*;
+import static global.GlobalVal.board;
 
 class MouseActionListener implements MouseListener, MouseMotionListener {
     BoardComponent board;
@@ -28,11 +29,13 @@ class MouseActionListener implements MouseListener, MouseMotionListener {
             boolean success = game.placePiece(game.id, x, y); //落子
             if(success) {
                 game.id++;
+                board.repaint();
             } else {
                 JOptionPane.showMessageDialog(window, "不正确的落子");
             }
         } else if(game.mode == Mode.markingDead) {
             game.selectDead(x, y);
+            board.repaint();
         }
     }
 

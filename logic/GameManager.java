@@ -42,7 +42,7 @@ public class GameManager {
             return false;
         }
         copyBack(id+1);
-        board.showBoard(situations[id+1]);
+        //board.showBoard(situations[id+1]);
         //showTurn(moves.get(id).color, id);
         return true;
     }
@@ -127,9 +127,9 @@ public class GameManager {
     }
 
     // clear: 使用深度优先搜索清除无气棋串
-    void clear(int x, int y)
+    void clear(int x0, int y0)
     {
-        BoardColor color = tmp.board[x][y];
+        BoardColor color = tmp.board[x0][y0];
         if(color == blank) {
             return;
         }
@@ -138,19 +138,19 @@ public class GameManager {
         } else if (color == white) {
             tmp.deadWhite ++;
         }
-        tmp.board[x][y] = blank;
-        m.get(tmp.pieces[x][y]).exist = false;
+        tmp.board[x0][y0] = blank;
+        m.get(tmp.pieces[x0][y0]).exist = false;
 
         int root = 0;
         for(int i=0; i<4; i++) {
-            int x2 = x + dx[i], y2 = y + dy[i];
-            if(!Util.inBoard(x, y) || tmp.board[x2][y2] == blank) {
+            int x = x0 + dx[i], y = y0 + dy[i];
+            if(!Util.inBoard(x, y) || tmp.board[x][y] == blank) {
                 continue;
             }
-            if(tmp.board[x2][y2] == color) {
-                clear(x2, y2);
-            } else if(findRoot(tmp.pieces[x2][y2]) != root) {
-                root = m.get(tmp.pieces[x2][y2]).root;
+            if(tmp.board[x][y] == color) {
+                clear(x, y);
+            } else if(findRoot(tmp.pieces[x][y]) != root) {
+                root = m.get(tmp.pieces[x][y]).root;
                 m.get(root).liberty ++;
             }
         }

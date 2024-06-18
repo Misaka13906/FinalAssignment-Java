@@ -17,19 +17,11 @@ public class Window extends JFrame {
 
     public Window() throws HeadlessException {
         initMenu();
-        //this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setSize(Config.WIDTH, Config.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         board = new BoardComponent();
-        //this.getContentPane().add(gameBoard, BorderLayout.CENTER);
         this.add(board);
-        //board.repaint();
-
-//        Button resignButton = new Button("认输");
-//        Button endButton = new Button("结束对局并标记死子");
-//        this.add(resignButton);
-//        this.add(endButton);
 
         this.setVisible(true);
     }

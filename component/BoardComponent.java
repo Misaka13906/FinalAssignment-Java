@@ -13,7 +13,6 @@ public class BoardComponent extends JPanel {
     Graphics g;
     BoardComponent() {
         super();
-        //this.setLayout(null);
         MouseActionListener mouselistener = new MouseActionListener(this);
         this.addMouseListener(mouselistener);
         this.setVisible(true);
@@ -24,11 +23,7 @@ public class BoardComponent extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         this.g = g;
-        drawBoard();
-        //showBoard(game.situations[game.id]);
-
-        System.out.println(g);
-        //drawPiece(3,2, Global.Color.black);
+        showBoard(game.situations[game.id]);
     }
 
     public void drawBoard() {
@@ -63,18 +58,9 @@ public class BoardComponent extends JPanel {
         if(color == black) g.setColor(Color.black); else
         if(color == white) g.setColor(Color.white); else return;
         Util.fillCircle(g, SIDE + x*CELL, SIDE + y*CELL, RADIUS);
-        //System.out.println(g);
-        //g.fillArc(SIDE+x*CELL - RADIUS, SIDE+y*CELL - RADIUS, RADIUS*2, RADIUS*2, 0, 360);
-        //JOptionPane.showMessageDialog(window, x + ", " + y);
     }
 
     public void showBoard(Situation now) {
-        //this.removeAll();
-        this.repaint();
-
-        debugCounter++;
-        System.out.println(debugCounter);
-
         drawBoard();
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
