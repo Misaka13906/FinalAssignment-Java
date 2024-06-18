@@ -40,12 +40,15 @@ public class Window extends JFrame {
 
         gameMenu = new JMenu("game");
 
-        newGame = new JMenuItem("new");
-        newGame.addActionListener(event -> game = new GameManager());
         resign = new JMenuItem("resign");
         resign.addActionListener(new ResignListener());
         reckon = new JMenuItem("reckon");
         reckon.addActionListener(new ReckoningListener());
+        newGame = new JMenuItem("new");
+        newGame.addActionListener(event -> {
+            game = new GameManager();
+            board.repaint();
+        });
 
         gameMenu.add(newGame);
         gameMenu.add(resign);

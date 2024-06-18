@@ -1,6 +1,8 @@
 *.class
 *.iml
+*.sgf
 
 /test
 /out
 /.idea
+
