@@ -15,7 +15,6 @@ public class GameManager {
     public Situation[] situations;
     public Moves moves = new Moves();
     Moves m = new Moves();
-
     Situation tmp = new Situation();
     boolean isLegal;
 
@@ -180,7 +179,7 @@ public class GameManager {
     enum operation {
         mark, cancelMark
     }
-    Boolean[][] isMarked = new Boolean[SIZE][SIZE];
+    public boolean[][] isMarked = new boolean[SIZE][SIZE];
 
     public void startMark(Situation now) {
         tmp.set(now);
@@ -228,10 +227,8 @@ public class GameManager {
             isMarked[x][y] = true;
             if(tmp.board[x][y] == black) {
                 tmp.deadBlack ++;
-                board.drawMark(x, y, Color.white);
             } else if(tmp.board[x][y] == white) {
                 tmp.deadWhite ++;
-                board.drawMark(x, y, Color.black);
             }
         } else {
             if(!isMarked[x][y]) {
@@ -240,10 +237,8 @@ public class GameManager {
             isMarked[x][y] = false;
             if(tmp.board[x][y] == black) {
                 tmp.deadBlack --;
-                board.drawMark(x, y, Color.black);
             } else if(tmp.board[x][y] == white) {
                 tmp.deadWhite --;
-                board.drawMark(x, y, Color.white);
             }
         }
 
@@ -263,16 +258,13 @@ public class GameManager {
             if(!Util.inBoard(x, y)) {
                 continue;
             }
-            if(tmp.board[x][y] == tmp.board[x][y]) {
+            if(tmp.board[x][y] == tmp.board[x0][y0]) {
                 remove(x, y);
             }
         }
 
         tmp.board[x0][y0] = blank;
     }
-
-
-
 
 
 }

@@ -1,7 +1,5 @@
 package logic;
 
-import java.awt.Color;
-
 import global.Situation;
 import global.Util;
 
@@ -11,17 +9,22 @@ import static global.GlobalVal.Rule.*;
 import static global.GlobalVal.BoardColor.*;
 
 public class ResultHandler {
-    Boolean[][] visit = new Boolean[SIZE][SIZE];
+    public BoardColor[][] mark = new BoardColor[SIZE][SIZE];
+    boolean[][] visit = new boolean[SIZE][SIZE];
     public int sumB, sumW; //总目数
     int totB, totW; //棋块数
     public double diff;
     public String winner;
     Rule rule;
+
     public void handleResult(Rule goRule, Situation finalSitu)
     {
-        for (int i=0; i<SIZE; i++)
-            for(int j=0; j<SIZE; j++)
+        for (int i=0; i<SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 visit[i][j] = false;
+                mark[i][j] = blank;
+            }
+        }
         sumB = sumW = totB = totW = 0;
         diff = 0;
         rule = goRule;
@@ -53,7 +56,9 @@ public class ResultHandler {
         visit[x][y] = true;
         count(color, brd[x][y]);
         if(brd[x][y] == blank) {
-            board.drawMark(x, y, (color == black ? Color.black : Color.white));
+            mark[x][y] = color; //标记属于谁的领地
+            System.out.println(x + ", " + y + (color==blank?" blank":color==black?" black":" white"));
+            //board.drawMark(x, y, color);
         }
 
         for(int i=0; i<4; i++) {

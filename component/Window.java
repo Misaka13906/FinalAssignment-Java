@@ -81,6 +81,7 @@ public class Window extends JFrame {
                 game.mode = Mode.markingDead;
                 game.startMark(game.situations[game.id]);
             } else if(game.mode == Mode.markingDead) {
+                board.repaint();
                 game.mode = Mode.endGame;
                 game.confirmMark(game.situations[game.id]);
                 game.res.handleResult(Rule.CN, game.situations[game.id]);

@@ -26,7 +26,7 @@ public class BoardComponent extends JPanel {
         showBoard(game.situations[game.id]);
     }
 
-    public void drawBoard() {
+    void drawBoard() {
         g.setColor(Color.yellow);
         g.clearRect(MARGIN, MARGIN, BOARD, BOARD);
         g.fillRect(MARGIN, MARGIN, BOARD, BOARD);
@@ -54,28 +54,34 @@ public class BoardComponent extends JPanel {
         }
     }
 
-    public void drawPiece(int x, int y, BoardColor color) {
+    void drawPiece(int x, int y, BoardColor color) {
         if(color == black) g.setColor(Color.black); else
         if(color == white) g.setColor(Color.white); else return;
         Util.fillCircle(g, SIDE + x*CELL, SIDE + y*CELL, RADIUS);
     }
 
-    public void showBoard(Situation now) {
+    void showBoard(Situation now) {
         drawBoard();
         for(int i=0; i<SIZE; i++) {
             for(int j=0; j<SIZE; j++) {
                 if(now.board[i][j] != blank) {
                     drawPiece(i, j, now.board[i][j]);
+                    if(game.isMarked[i][j]) {
+                        drawMark(i, j, (now.board[i][j] == black ? white : black));
+                    }
+                }
+                if(game.res.mark[i][j] != blank) {
+                    drawMark(i, j, game.res.mark[i][j]);
                 }
             }
         }
     }
 
-    public void drawMark(int x, int y, Color color)
-    {
+    void drawMark(int x, int y, BoardColor color) {
+        if(color == black) g.setColor(Color.black); else
+        if(color == white) g.setColor(Color.white); else return;
         x = Util.getPosition(x);
         y = Util.getPosition(y);
-        g.setColor(color);
-        g.drawRect(x - SQUARE/2, y - SQUARE/2, SQUARE, SQUARE);
+        g.fillRect(x - SQUARE/2, y - SQUARE/2, SQUARE, SQUARE);
     }
 }
