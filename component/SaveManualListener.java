@@ -83,8 +83,8 @@ class SaveManualListener implements ActionListener {
             } else {
                 color = 'W';
             }
-            x = (char)('a' + 18 - game.moves.get(i).x);
-            y = (char)('a' + 18 - game.moves.get(i).y);
+            x = (char)('a' + SIZE - 1 - game.moves.get(i).x);
+            y = (char)('a' + SIZE - 1 - game.moves.get(i).y);
             out.write(";" + color + "[" + y + x +"]");
             if(i%10 == 0) {
                 out.write("\n");

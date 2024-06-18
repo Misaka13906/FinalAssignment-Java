@@ -1,6 +1,6 @@
 //package finalassignment;
 
-import component.*;
+import component.Window;
 import global.GlobalVal;
 import logic.GameManager;
 

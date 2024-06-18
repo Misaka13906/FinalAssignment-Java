@@ -1,7 +1,6 @@
 package global;
 
 import static global.GlobalVal.BoardColor;
-import static global.GlobalVal.BoardColor.*;
 
 public class Situation {
     static final int SIZE = Config.SIZE;
@@ -12,7 +11,7 @@ public class Situation {
     public Situation() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j] = blank;
+                board[i][j] = BoardColor.blank;
             }
         }
     }
