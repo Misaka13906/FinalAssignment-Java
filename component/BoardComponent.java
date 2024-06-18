@@ -13,8 +13,6 @@ public class BoardComponent extends JPanel {
     Graphics g;
     BoardComponent() {
         super();
-        MouseActionListener mouselistener = new MouseActionListener(this);
-        this.addMouseListener(mouselistener);
         this.setVisible(true);
         this.setMinimumSize(new Dimension(PANEL, PANEL));
     }

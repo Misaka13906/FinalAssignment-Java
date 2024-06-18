@@ -13,7 +13,7 @@ import static global.GlobalVal.*;
 public class Window extends JFrame {
     JMenuBar menuBar;
     JMenu fileOperationMenu, gameMenu;
-    JMenuItem saveManual, resign, reckon, newGame;
+    JMenuItem saveManual, resign, reckon, newGame, info;
 
     public Window() throws HeadlessException {
         initMenu();
@@ -21,6 +21,7 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         board = new BoardComponent();
+        board.addMouseListener(new MouseActionListener());
         this.add(board);
 
         this.setVisible(true);
@@ -34,35 +35,39 @@ public class Window extends JFrame {
 
         saveManual = new JMenuItem("save");
         saveManual.addActionListener(new SaveManualListener());
+
         fileOperationMenu.add(saveManual);
 
         gameMenu = new JMenu("game");
 
         newGame = new JMenuItem("new");
-        newGame.addActionListener(new RestartListener());
-        gameMenu.add(newGame);
-
+        newGame.addActionListener(event -> game = new GameManager());
         resign = new JMenuItem("resign");
         resign.addActionListener(new ResignListener());
-        gameMenu.add(resign);
-
         reckon = new JMenuItem("reckon");
         reckon.addActionListener(new ReckoningListener());
+
+        gameMenu.add(newGame);
+        gameMenu.add(resign);
         gameMenu.add(reckon);
+
+        info = new JMenuItem("info");
+        info.addActionListener(event ->
+            JOptionPane.showMessageDialog(window,
+                """
+                    围棋对弈 v1.0
+                    完成时间：
+                    姓名：
+                    学号：
+                    班级：
+                """, "info", JOptionPane.INFORMATION_MESSAGE));
 
         menuBar.add(fileOperationMenu);
         menuBar.add(gameMenu);
-
+        menuBar.add(info);
     }
 
-    static class RestartListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            game = new GameManager();
-        }
-    }
-
-    static class ResignListener implements ActionListener {
+    private static class ResignListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             game.mode = Mode.endGame;
@@ -73,7 +78,7 @@ public class Window extends JFrame {
         }
     }
 
-    static class ReckoningListener implements ActionListener {
+    private static class ReckoningListener implements ActionListener {
         // 对局结束的清算阶段
         @Override
         public void actionPerformed(ActionEvent e) {
